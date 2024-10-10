@@ -3,6 +3,7 @@ package com.qmb.database.services.impl;
 import com.qmb.database.domain.entities.AuthorEntity;
 import com.qmb.database.repositories.AuthorRepository;
 import com.qmb.database.services.AuthorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,13 +12,10 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
-    private AuthorRepository authorRepository;
-
-    public AuthorServiceImpl(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
+    private final AuthorRepository authorRepository;
 
     @Override
     public AuthorEntity save(AuthorEntity authorEntity) {

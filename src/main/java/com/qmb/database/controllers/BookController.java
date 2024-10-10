@@ -4,6 +4,7 @@ import com.qmb.database.domain.dto.BookDto;
 import com.qmb.database.domain.entities.BookEntity;
 import com.qmb.database.mappers.Mapper;
 import com.qmb.database.services.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -13,15 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 public class BookController {
 
-    private Mapper<BookEntity, BookDto> bookMapper;
-    private BookService bookService;
-
-    public BookController(Mapper<BookEntity, BookDto> bookMapper, BookService bookService) {
-        this.bookMapper = bookMapper;
-        this.bookService = bookService;
-    }
+    private final Mapper<BookEntity, BookDto> bookMapper;
+    private final BookService bookService;
 
     @PutMapping(path = "/books/{isbn}")
     public ResponseEntity<BookDto> createUpdateBook(@PathVariable("isbn") String isbn,
@@ -69,8 +66,8 @@ public class BookController {
     }
 
     @DeleteMapping(path = "/books/{isbn}")
-    public ResponseEntity deleteBook(@PathVariable("isbn") String isbn) {
+    public ResponseEntity<?> deleteBook(@PathVariable("isbn") String isbn) {
         bookService.delete(isbn);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

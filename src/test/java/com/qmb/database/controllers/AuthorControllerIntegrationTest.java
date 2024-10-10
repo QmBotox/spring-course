@@ -5,9 +5,9 @@ import com.qmb.database.TestDataUtil;
 import com.qmb.database.domain.dto.AuthorDto;
 import com.qmb.database.domain.entities.AuthorEntity;
 import com.qmb.database.services.AuthorService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -21,18 +21,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
+@RequiredArgsConstructor
 public class AuthorControllerIntegrationTest {
 
-    private AuthorService authorService;
-    private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    public AuthorControllerIntegrationTest(AuthorService authorService, MockMvc mockMvc, ObjectMapper objectMapper) {
-        this.authorService = authorService;
-        this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
-    }
+    private final AuthorService authorService;
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
 
     @Test
     public void testThatCreateAuthorSuccessfullyReturnsHttp201Created() throws Exception {

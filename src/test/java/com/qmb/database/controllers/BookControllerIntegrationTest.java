@@ -5,9 +5,9 @@ import com.qmb.database.TestDataUtil;
 import com.qmb.database.domain.dto.BookDto;
 import com.qmb.database.domain.entities.BookEntity;
 import com.qmb.database.services.BookService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -21,18 +21,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
+@RequiredArgsConstructor
 public class BookControllerIntegrationTest {
 
-    private BookService bookService;
-    private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    public BookControllerIntegrationTest(BookService bookService, MockMvc mockMvc, ObjectMapper objectMapper) {
-        this.bookService = bookService;
-        this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
-    }
+    private final BookService bookService;
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
 
     @Test
     public void testThatBookControllerReturnsHttpStatus201Created() throws Exception {

@@ -4,6 +4,7 @@ import com.qmb.database.domain.dto.AuthorDto;
 import com.qmb.database.domain.entities.AuthorEntity;
 import com.qmb.database.mappers.Mapper;
 import com.qmb.database.services.AuthorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +14,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 public class AuthorController {
 
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
-    private Mapper<AuthorEntity, AuthorDto> authorMapper;
-
-    public AuthorController(AuthorService authorService, Mapper<AuthorEntity, AuthorDto> authorMapper) {
-        this.authorService = authorService;
-        this.authorMapper = authorMapper;
-    }
+    private final Mapper<AuthorEntity, AuthorDto> authorMapper;
 
     @PostMapping(path = "/authors")
     public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto author) {
@@ -82,8 +79,8 @@ public class AuthorController {
     }
 
     @DeleteMapping(path = "/authors/{id}")
-    public ResponseEntity deleteAuthor(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id) {
         authorService.delete(id);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
